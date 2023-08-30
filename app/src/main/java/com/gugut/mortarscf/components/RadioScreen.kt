@@ -101,6 +101,12 @@ fun SimpleRadioButtonComponent() {
                         singleLine = true,
                         modifier = Modifier.weight(1f).padding()
                     )
+                    TextField(
+                        value = editText1Value,
+                        onValueChange = { editText1Value = it },
+                        singleLine = true,
+                        modifier = Modifier.weight(1f).padding()
+                    )
                 }
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
