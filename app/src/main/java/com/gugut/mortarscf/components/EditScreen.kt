@@ -32,12 +32,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.gugut.mortarscf.R
 import com.gugut.mortarscf.drawer.TopBar
 
 @Composable
 fun EditScreen(
-    openDrawer: () -> Unit
+    openDrawer: () -> Unit,
+    navController: NavHostController
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         TopBar(
@@ -50,13 +52,15 @@ fun EditScreen(
 //            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
-            EditableTextFields()
+            EditableTextFields(navController)
         }
     }
 }
 
 @Composable
-fun EditableTextFields() {
+fun EditableTextFields(
+    navController: NavHostController
+) {
     var textValue by remember { mutableStateOf("") }
     var selectedDropdownItem by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
@@ -150,6 +154,7 @@ fun EditableTextFields() {
                 .padding(8.dp)
                 .clickable {
                     // Add your click handling logic here
+                    navController.navigate("radio")
                 },
             elevation = 8.dp
         ) {

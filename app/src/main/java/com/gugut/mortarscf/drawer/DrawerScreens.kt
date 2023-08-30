@@ -3,6 +3,7 @@ package com.gugut.mortarscf.drawer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
@@ -20,6 +21,7 @@ sealed class DrawerScreens(
     object Help : DrawerScreens("Help", "help", Icons.Default.Warning)
     object Settings : DrawerScreens("Settings", "settings", Icons.Default.Settings)
     object Second : DrawerScreens("Second", "second", Icons.Default.Add) // Replace with appropriate icon
+    object RadioScreen : DrawerScreens("Radio", "radio", Icons.Default.Done)
 }
 
 
@@ -29,5 +31,6 @@ val screens = listOf(
     DrawerScreens.Help,
     DrawerScreens.Units,
     DrawerScreens.Settings,
-    DrawerScreens.Second
+    DrawerScreens.Second,
+    DrawerScreens.RadioScreen
 )

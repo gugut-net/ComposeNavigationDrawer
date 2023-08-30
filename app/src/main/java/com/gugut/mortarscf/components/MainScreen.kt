@@ -71,9 +71,19 @@ fun MainScreen() {
                     )
                 }
                 composable(DrawerScreens.Second.route) {
-                    EditScreen {
-                        openDrawer()
-                    }
+                    RadioScreen(
+                        openDrawer = {
+                            openDrawer()
+                        }
+                    )
+                }
+                composable(DrawerScreens.Second.route) {
+                    EditScreen(
+                        openDrawer = {
+                            openDrawer()
+                        },
+                        navController
+                    )
                 }
             }
         }
