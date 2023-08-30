@@ -70,7 +70,7 @@ fun MainScreen() {
                         }
                     )
                 }
-                composable(DrawerScreens.Second.route) {
+                composable(DrawerScreens.RadioScreen.route) {
                     RadioScreen(
                         openDrawer = {
                             openDrawer()
