@@ -7,6 +7,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -17,7 +18,10 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen() {
+
     val navController = rememberNavController()
+    val sharedViewModel = DataViewModel()
+
     Surface(color = MaterialTheme.colors.background) {
         val drawerState = rememberDrawerState(DrawerValue.Closed)
         val scope = rememberCoroutineScope()
@@ -53,8 +57,8 @@ fun MainScreen() {
                         openDrawer = {
                             openDrawer()
                         },
-                        navController
-                    )
+                        navController,
+                        sharedViewModel                    )
                 }
                 composable(DrawerScreens.Account.route) {
                     Account(
@@ -82,7 +86,8 @@ fun MainScreen() {
                         openDrawer = {
                             openDrawer()
                         },
-                        navController
+                        navController,
+                        sharedViewModel
                     )
                 }
             }

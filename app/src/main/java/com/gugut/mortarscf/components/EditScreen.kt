@@ -14,10 +14,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
@@ -32,14 +34,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.gugut.mortarscf.R
 import com.gugut.mortarscf.drawer.TopBar
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 @Composable
 fun EditScreen(
     openDrawer: () -> Unit,
-    navController: NavHostController
+    navController: NavHostController,
+    savedData: DataViewModel
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         TopBar(
@@ -51,19 +58,33 @@ fun EditScreen(
         Column(
 //            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally) {
-            EditableTextFields(navController)
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            EditableTextFields(navController, viewModel())
         }
     }
 }
 
+@HiltViewModel
+class DataViewModel @Inject constructor(
+
+) : ViewModel() {
+    var textValue by mutableStateOf("")
+    var selectedDropdownItem by mutableStateOf("")
+    var savedData by mutableStateOf("")
+    var enteredData by mutableStateOf("")
+}
+
 @Composable
 fun EditableTextFields(
-    navController: NavHostController
+    navController: NavHostController,
+    sharedViewModel: DataViewModel
 ) {
     var textValue by remember { mutableStateOf("") }
     var selectedDropdownItem by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
+    val dataViewModel: DataViewModel = viewModel()
+
 
     Row(
         modifier = Modifier.fillMaxWidth()
@@ -169,4 +190,24 @@ fun EditableTextFields(
             }
         }
     }
+    Button(
+        onClick = {
+            // Save the entered data to the shared ViewModel
+            sharedViewModel.enteredData = textValue
+
+            // Pass the data back to HomeScreen using savedStateHandle
+            navController.previousBackStackEntry
+                ?.savedStateHandle
+                ?.set("key", textValue)
+
+            // Navigate back to the HomeScreen
+            navController.popBackStack()
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Text(text = "Save")
+    }
+
 }

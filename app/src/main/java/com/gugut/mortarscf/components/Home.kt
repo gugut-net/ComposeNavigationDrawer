@@ -23,8 +23,10 @@ import com.gugut.mortarscf.drawer.TopBar
 @Composable
 fun Home(
     openDrawer: () -> Unit,
-    navController: NavHostController
-) {
+    navController: NavHostController,
+    sharedViewModel: DataViewModel,
+
+    ) {
     Column(modifier = Modifier.fillMaxSize()) {
         TopBar(
             title = "Home",
@@ -36,7 +38,6 @@ fun Home(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-                    /* Handle card click here */
                     navController.navigate("second")
                 }
                 .padding(6.dp),
@@ -45,8 +46,13 @@ fun Home(
             Column(
                 modifier = Modifier.padding(16.dp)
             ) {
+                // Observe the data using savedStateHandle
+                val enteredData: String? = navController.currentBackStackEntry
+                    ?.savedStateHandle
+                    ?.get<String>("key")
+
                 Text(
-                    text = "Card Title",
+                    text = enteredData ?: "No data entered",
                     style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
